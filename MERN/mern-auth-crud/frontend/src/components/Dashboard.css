@@ -1,0 +1,86 @@
+/* src/components/Dashboard.css */
+
+.dashboard-container {
+  width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.dashboard-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-inline {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.form-inline input {
+  margin: 0 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  flex: 1;
+}
+
+.form-inline button {
+  padding: 10px 15px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.form-inline button:hover {
+  background: #218838;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+}
+
+.item-list li {
+  background: #f9f9f9;
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-list strong {
+  color: #007bff;
+}
+
+.item-list button {
+  margin-left: 8px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.item-list button:hover {
+  opacity: 0.8;
+}
+
+.item-list button:nth-child(2) {
+  background: #ffc107;
+  color: #333;
+}
+
+.item-list button:nth-child(3) {
+  background: #dc3545;
+  color: white;
+}
