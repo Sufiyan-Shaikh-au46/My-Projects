@@ -1,45 +1,87 @@
-// src/components/Dashboard.js
-import { useState, useEffect } from 'react';
-import api from '../axiosSetup.jsx';
-import Logout from './Logout.jsx';
-import './Dashboard.css';
+// src/components/Dashboard.jsx
+import { useState, useEffect } from "react";
+import api from "../axiosSetup.jsx";
+import Logout from "./Logout.jsx";
+import "./Dashboard.css";
 
 export default function Dashboard() {
   const [items, setItems] = useState([]);
-  const [form, setForm] = useState({ title: '', description: '' });
+  const [form, setForm] = useState({ title: "", description: "" });
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    api.get('/dashboard').then(res => setItems(res.data));
+    const loadItems = async () => {
+      try {
+        const res = await api.get("/dashboard");
+        // Backend now returns { success, data }
+        setItems(res.data?.data || []);
+      } catch (err) {
+        setError(err.normalizedMessage || "Failed to load items");
+      }
+    };
+
+    loadItems();
   }, []);
 
   const addItem = async () => {
-    const res = await api.post('/dashboard', form);
-    setItems([...items, res.data]);
-    setForm({ title: '', description: '' });
+    setError("");
+    try {
+      const res = await api.post("/dashboard", form);
+      const newItem = res.data?.data || res.data;
+      setItems([...items, newItem]);
+      setForm({ title: "", description: "" });
+    } catch (err) {
+      setError(err.normalizedMessage || "Failed to add item");
+    }
   };
 
   const deleteItem = async (id) => {
-    await api.delete(`/dashboard/${id}`);
-    setItems(items.filter(i => i._id !== id));
+    setError("");
+    try {
+      await api.delete(`/dashboard/${id}`);
+      setItems(items.filter((i) => i._id !== id));
+    } catch (err) {
+      setError(err.normalizedMessage || "Failed to delete item");
+    }
   };
 
   const updateItem = async (id) => {
-    const res = await api.put(`/dashboard/${id}`, { title: 'Updated', description: 'Updated desc' });
-    setItems(items.map(i => i._id === id ? res.data : i));
+    setError("");
+    try {
+      const res = await api.put(`/dashboard/${id}`, {
+        title: "Updated",
+        description: "Updated desc",
+      });
+      const updatedItem = res.data?.data || res.data;
+      setItems(items.map((i) => (i._id === id ? updatedItem : i)));
+    } catch (err) {
+      setError(err.normalizedMessage || "Failed to update item");
+    }
   };
 
   return (
     <div className="dashboard-container">
       <h2>Dashboard</h2>
       <Logout />
+      {error && <p className="error-text">{error}</p>}
       <div className="form-inline">
-        <input placeholder="Title" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} />
-        <input placeholder="Description" value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} />
+        <input
+          placeholder="Title"
+          value={form.title}
+          onChange={(e) => setForm({ ...form, title: e.target.value })}
+        />
+        <input
+          placeholder="Description"
+          value={form.description}
+          onChange={(e) =>
+            setForm({ ...form, description: e.target.value })
+          }
+        />
         <button onClick={addItem}>Add</button>
       </div>
 
       <ul className="item-list">
-        {items.map(i => (
+        {items.map((i) => (
           <li key={i._id}>
             <strong>{i.title}</strong>: {i.description}
             <button onClick={() => updateItem(i._id)}>Update</button>

@@ -2,16 +2,27 @@
 
 import jwt from "jsonwebtoken";
 
+const JWT_SECRET = process.env.JWT_SECRET || "accessSecret";
+
 function auth(req, res, next) {
   const token = req.cookies.accessToken;
-  if (!token) return res.status(401).json({ msg: 'No token' });
+
+  if (!token) {
+    return res
+      .status(401)
+      .json({ success: false, message: "No token, authorization denied" });
+  }
 
   try {
-    const decoded = jwt.verify(token, 'accessSecret');
+    const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded.user;
-    next();
+    return next();
   } catch (err) {
-    res.status(401).json({ msg: 'Token expired or invalid' });
+    const isTokenExpired = err.name === "TokenExpiredError";
+    return res.status(401).json({
+      success: false,
+      message: isTokenExpired ? "Token expired" : "Token invalid",
+    });
   }
 }
 
