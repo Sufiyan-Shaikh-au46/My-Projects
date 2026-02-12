@@ -1,0 +1,48 @@
+/* src/components/Form.css */
+.form-container {
+  width: 300px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #f4f4f4;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.form-container h2 {
+  margin-bottom: 15px;
+}
+
+.form-container input {
+  width: 90%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background: #0056b3;
+}
+
+/* Feedback messages */
+.error-text {
+  margin: 8px 0;
+  color: #dc3545;
+  font-size: 0.9rem;
+}
+
+.success-text {
+  margin: 8px 0;
+  color: #28a745;
+  font-size: 0.9rem;
+}

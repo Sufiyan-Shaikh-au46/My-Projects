@@ -16,7 +16,14 @@ export default ({ mode }) => {
     plugins: [react()],
     server: {
       port: Number(env.VITE_PORT) || 5173,
-      strictPort: true
+      strictPort: true,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:5000',
+          changeOrigin: true,
+          secure: false
+        }
+      }
     }
   })
 }
