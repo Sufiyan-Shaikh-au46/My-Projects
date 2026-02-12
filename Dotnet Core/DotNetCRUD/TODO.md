@@ -1,6 +1,0 @@
-- [x] Update Backend.csproj to use SQL Server instead of SQLite
-- [x] Update Program.cs to use UseSqlServer
-- [x] Add SQL Server connection string to appsettings.Development.json
-- [x] Build backend
-- [x] Run backend
-- [x] Run frontend
